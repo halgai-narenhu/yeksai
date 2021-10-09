@@ -21,6 +21,10 @@ import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
 
+// echarts
+import * as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`

@@ -50,6 +50,7 @@ import {
 import Viser from 'viser-vue'
 
 // ext library
+import dataV from '@jiaminghi/data-view'
 import VueCropper from 'vue-cropper'
 import Dialog from '@/components/Dialog'
 import MultiTab from '@/components/MultiTab'
@@ -57,6 +58,7 @@ import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
 import './directives/action'
 
+Vue.use(dataV)
 Vue.use(ConfigProvider)
 Vue.use(Layout)
 Vue.use(Input)
