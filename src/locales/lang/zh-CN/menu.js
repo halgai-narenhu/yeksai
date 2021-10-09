@@ -1,6 +1,6 @@
 export default {
     'menu.welcome': '欢迎',
-    'menu.home': '主页',
+    'menu.home': '首页',
     'menu.dashboard': '仪表盘',
     'menu.dashboard.analysis': '分析页',
     'menu.dashboard.monitor': '监控页',
@@ -35,5 +35,7 @@ export default {
     'menu.account.center': '个人中心',
     'menu.account.settings': '个人设置',
     'menu.account.trigger': '触发报错',
-    'menu.account.logout': '退出登录'
+    'menu.account.logout': '退出登录',
+    'menu.areaCompare': '区域对比',
+    'menu.dataCompare': '数据对比'
 }
