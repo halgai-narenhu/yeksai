@@ -47,19 +47,29 @@ export default {
   name: 'Echarts',
   data () {
     return {
+      clickAreaName: '',
+      dongbu: ['呼伦贝尔市', '兴安盟', '通辽市', '赤峰市'],
+      zhongbu: ['锡林郭勒盟', '乌兰察布市', '包头市', '呼和浩特市'],
+      xibu: ['巴彦淖尔市', '鄂尔多斯市', '乌海市', '阿拉善盟'],
       san: {
             type: 'scatter',
             coordinateSystem: 'geo',
-            data: [[120.383983, 48.644405], [120.383983, 47.644405], [120.383983, 46.644405], [120.383983, 45.644405], [120.383983, 44.644405], [112.73751847222223, 44.17070467479675]],
-            hoverAnimation: true,
+            data: [[117.59434743563688, 48.8656393394309], [118.20594811991872, 48.51486835873985], [119.78891459688349, 49.1624455538618], [120.54442132452576, 49.83700513211383], [120.54442132452576, 50.565529476626025], [121.51578711720869, 46.680066305894314], [121.94750524729, 47.00385490345529], [122.4511763990515, 46.787995838414645], [122.55910593157184, 46.35627770833334], [117.01872326219514, 45.223017616869924], [115.93942793699189, 44.737334720528466], [114.50036750338755, 44.08975752540651], [112.48568289634149, 44.22466944105692], [114.6802500575881, 42.76762075203253], [112.84544800474256, 42.68667360264229], [110.47099828929541, 42.01211402439025], [111.37041106029812, 40.71695963414635], [113.09728358062333, 40.689977251016266], [108.20447810636858, 41.823237342479686], [105.07452166327916, 40.55506533536586], [101.44089406842821, 41.39151921239838], [105.07452166327916, 38.612333750000005], [108.24045461720868, 38.66629851626017], [121.91152873644988, 43.55010986280489], [119.14133740176153, 42.983479817073174]],
+            z: 2,
             symbolSize: [11, 14],
             itemStyle: {
               normal: {
                   color: 'white',
                   shadowBlur: 2,
-                  shadowColor: 'rgba(0, 0, 0, .42)',
+                  shadowColor: 'rgba(0, 0, 0, 0.62)',
                   shadowOffsetX: 2,
                   shadowOffsetY: 2
+              },
+              emphasis: {
+                  shadowColor: 'rgba(255, 255, 255, 10)',
+                  shadowBlur: 5,
+                  shadowOffsetX: 0,
+                  shadowOffsetY: 0
               }
             },
             symbol: 'path://M513.024 1024h-1.024c-17.92 0-34.816-7.168-47.104-20.48-9.728-10.24-97.28-102.912-184.832-219.648C162.304 625.664 102.4 499.2 102.4 409.088 102.4 183.296 286.208 0 512 0s409.6 183.296 409.6 409.088c0 54.784-20.992 121.856-62.976 199.68-39.936 74.752-100.352 161.792-179.712 258.048l-0.512 0.512-117.76 134.144c-11.776 14.336-29.184 22.528-47.616 22.528z m-1.024-423.936c105.984 0 191.488-86.016 191.488-191.488S617.984 217.6 512 217.6 320 303.104 320 409.088s86.016 190.976 192 190.976z'
@@ -296,32 +306,26 @@ export default {
         //     data.event.offsetY
         //   ])
         // )
+        if (data.name) {
         const op = this.Initoption
         myecharts.setOption(op, true)
-        if (data.name === '呼伦贝尔市' || data.name === '兴安盟' || data.name === '通辽市' || data.name === '赤峰市') {
+        if (this.dongbu.includes(data.name)) {
+          this.clickAreaName = data.name
           this.tooltipData = [
               { coords: [[120.383983, 48.644405], [105.670801, 48.318311]] }
             ]
-          console.log('data', data)
-          } else if (
-          data.name === '锡林郭勒盟' ||
-          data.name === '乌兰察布市' ||
-          data.name === '包头市' ||
-          data.name === '呼和浩特市'
-          ) {
+          } else if (this.zhongbu.includes(data.name)) {
+            this.clickAreaName = data.name
             this.tooltipData = [
               { coords: [[116.090996, 43.944018], [105.670801, 48.318311]] }
             ]
-          } else if (
-          data.name === '巴彦淖尔市' ||
-          data.name === '鄂尔多斯市' ||
-          data.name === '乌海市' ||
-          data.name === '阿拉善盟'
-          ) {
+          } else if (this.xibu.includes(data.name)) {
+            this.clickAreaName = data.name
             this.tooltipData = [
               { coords: [[103.314352, 40.550928], [105.670801, 46.318311]] }
             ]
           }
+        console.log('option', data)
         option.series.splice(2, 1)
         option.series.push({
             type: 'lines',
@@ -373,72 +377,75 @@ export default {
             }
           })
         myecharts.setOption(option)
-        if (data.name === '呼伦贝尔市' || data.name === '兴安盟' || data.name === '通辽市' || data.name === '赤峰市') {
+        if (this.dongbu.includes(data.name)) {
           myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [3, 4, 6, 9]
           })
-        } else if (
-          data.name === '锡林郭勒盟' ||
-          data.name === '乌兰察布市' ||
-          data.name === '包头市' ||
-          data.name === '呼和浩特市'
-          ) {
+        } else if (this.zhongbu.includes(data.name)) {
             myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [0, 1, 8, 10]
           })
-        } else if (
-          data.name === '巴彦淖尔市' ||
-          data.name === '鄂尔多斯市' ||
-          data.name === '乌海市' ||
-          data.name === '阿拉善盟'
-          ) {
+        } else if (this.xibu.includes(data.name)) {
             myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [2, 5, 7, 11]
           })
+        }
         }
       })
       // 区域高亮
       myecharts.on('mouseover', (data) => {
         // 东部区
-        if (data.name === '呼伦贝尔市' || data.name === '兴安盟' || data.name === '通辽市' || data.name === '赤峰市') {
+        if (this.dongbu.includes(data.name)) {
           myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [3, 4, 6, 9]
           })
         // 中部区
-        } else if (
-          data.name === '锡林郭勒盟' ||
-          data.name === '乌兰察布市' ||
-          data.name === '包头市' ||
-          data.name === '呼和浩特市'
-          ) {
+        } else if (this.zhongbu.includes(data.name)) {
             myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [0, 1, 8, 10] })
           // 西部区
-          } else if (
-          data.name === '巴彦淖尔市' ||
-          data.name === '鄂尔多斯市' ||
-          data.name === '乌海市' ||
-          data.name === '阿拉善盟'
-          ) {
+          } else if (this.xibu.includes(data.name)) {
           myecharts.dispatchAction({
+            seriesIndex: 0,
             type: 'highlight',
             dataIndex: [2, 5, 7, 11]
           })
           }
       })
       myecharts.on('mouseout', (data) => {
+        if (myecharts.getOption().series.length > 2) {
+          if (this.dongbu.includes(this.clickAreaName)) {
+            myecharts.dispatchAction({
+            type: 'downplay',
+            dataIndex: [0, 1, 8, 10, 2, 5, 7, 11]
+             })
+          } else if (this.zhongbu.includes(this.clickAreaName)) {
+            myecharts.dispatchAction({
+            type: 'downplay',
+            dataIndex: [3, 4, 6, 9, 2, 5, 7, 11]
+             })
+            } else if (this.xibu.includes(this.clickAreaName)) {
+            myecharts.dispatchAction({
+            type: 'downplay',
+            dataIndex: [3, 4, 6, 9, 0, 1, 8, 10]
+             })
+            }
+        } else {
         myecharts.dispatchAction({
           type: 'downplay',
           seriesIndex: 0
         })
-      })
-      myecharts.on('legendselectchanged', function (params) {
-        console.log('paramas', params)
+}
       })
       myecharts.setOption(this.option)
     }
